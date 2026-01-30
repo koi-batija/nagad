@@ -58,7 +58,6 @@
             margin-bottom: 30px;
             border-bottom: 1px solid #ccc;
             padding: 5px 0;
-            text-align: left;
         }
 
         .label-text {
@@ -73,45 +72,50 @@
             width: 100%;
             border: none;
             outline: none;
-            font-size: 18px;
+            font-size: 20px;
             text-align: center;
             letter-spacing: 2px;
+            background: transparent;
         }
 
-        /* পিন ইনপুট স্টাইল */
+        /* Number input এর পাশের অ্যারো বাটনগুলো সরানোর জন্য */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
         .pin-container {
             border-bottom: 1px solid #333;
             padding-bottom: 5px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
-        /* লগইন বাটন ও লোডার এনিমেশন */
         .login-btn {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             border: 1.5px solid #008744;
             background: transparent;
             color: #444;
-            border-radius: 25px;
+            border-radius: 30px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
             transition: 0.3s;
         }
 
-        /* গোল ঘুরার এনিমেশন CSS */
+        /* লোডার ডিজাইন */
         .loader {
-            display: none; /* শুরুতে লুকানো থাকবে */
-            width: 20px;
-            height: 20px;
+            display: none;
+            width: 22px;
+            height: 22px;
             border: 3px solid #f3f3f3;
             border-top: 3px solid #008744;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 0.8s linear infinite;
         }
 
         @keyframes spin {
@@ -121,10 +125,10 @@
 
         .forgot-pin {
             display: block;
-            margin-top: 15px;
+            margin-top: 20px;
             color: #888;
             text-decoration: none;
-            font-size: 13px;
+            font-size: 14px;
         }
 
         .footer {
@@ -140,7 +144,7 @@
         .footer-item {
             text-align: center;
             color: #555;
-            font-size: 12px;
+            font-size: 13px;
         }
     </style>
 </head>
@@ -158,11 +162,12 @@
     <div class="login-form">
         <div class="input-group">
             <span class="label-text">মোবাইল নাম্বার</span>
-            <input type="number" class="input-field" placeholder="01XXXXXXXXX">
+            <input type="tel" class="input-field" placeholder="01XXXXXXXXX" inputmode="numeric" pattern="[0-9]*">
         </div>
 
         <div class="pin-container">
-            <input type="password" id="pinInput" class="input-field" placeholder="পিন" maxlength="4" inputmode="numeric">
+            <span class="label-text">পিন</span>
+            <input type="password" id="pinInput" class="input-field" placeholder="****" inputmode="numeric" maxlength="4">
         </div>
 
         <button class="login-btn" id="loginBtn">
@@ -184,31 +189,22 @@
         const btnText = document.getElementById('btnText');
         const pinInput = document.getElementById('pinInput');
 
-        // পিন ৪ সংখ্যার বেশি টাইপ করতে দিবে না (নিরাপত্তার জন্য JS দিয়ে চেক)
+        // পিন যাতে ৪ সংখ্যার বেশি না হয়
         pinInput.addEventListener('input', function() {
             if (this.value.length > 4) {
                 this.value = this.value.slice(0, 4);
             }
         });
 
-        // বাটনে ক্লিক করলে ঘুরতে থাকবে
+        // বাটন ক্লিক করলে লোডিং শুরু হবে
         loginBtn.addEventListener('click', function() {
-            // টেক্সট সরিয়ে লোডার দেখানো
+            // লেখা লুকাবে এবং চাকা ঘুরবে
             btnText.style.display = 'none';
             loader.style.display = 'block';
             
-            // বাটন ডিজেবল করা যাতে বারবার ক্লিক না করা যায়
+            // বাটন ডিজেবল করা
             loginBtn.disabled = true;
-            loginBtn.style.cursor = 'not-allowed';
-
-            // আপনি চাইলে এখানে নির্দিষ্ট সময় পর আবার আগের অবস্থায় ফেরাতে পারেন
-            /*
-            setTimeout(() => {
-                btnText.style.display = 'block';
-                loader.style.display = 'none';
-                loginBtn.disabled = false;
-            }, 3000); 
-            */
+            loginBtn.style.opacity = '0.7';
         });
     </script>
 
