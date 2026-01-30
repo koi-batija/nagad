@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nagad Islamic Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            align-items: center;
+        }
+
+        /* Top Language Toggle */
+        .lang-toggle {
+            align-self: flex-end;
+            margin: 20px;
+            border: 1px solid #008744;
+            border-radius: 20px;
+            display: flex;
+            overflow: hidden;
+            font-size: 12px;
+        }
+
+        .lang-toggle div {
+            padding: 5px 15px;
+            cursor: pointer;
+        }
+
+        .lang-bn { background-color: #008744; color: white; }
+        .lang-en { background-color: white; color: #333; }
+
+        /* Logo Section */
+        .logo-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .logo-container img {
+            width: 150px; /* Adjust based on your image */
+        }
+
+        /* Form Section */
+        .login-form {
+            width: 90%;
+            max-width: 400px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #ccc;
+            padding: 5px 0;
+            text-align: left;
+        }
+
+        .label-text {
+            display: block;
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .input-field {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 18px;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        /* PIN Input specific */
+        .pin-container {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+
+        .pin-icon {
+            color: #008744;
+            margin-right: 10px;
+        }
+
+        /* Button */
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            border: 1.5px solid #008744;
+            background: transparent;
+            color: #444;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .forgot-pin {
+            display: block;
+            margin-top: 15px;
+            color: #888;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+
+        .footer-item {
+            text-align: center;
+            color: #555;
+            font-size: 12px;
+        }
+
+        .footer-item img {
+            display: block;
+            margin: 0 auto 5px;
+            width: 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lang-toggle">
+        <div class="lang-bn">বাং</div>
+        <div class="lang-en">ENG</div>
+    </div>
+
+    <div class="logo-container">
+        <img src="https://freepnglogo.com/images/all_img/1725619061nagad-islamic-logo-png.png" alt="Nagad Islamic Logo">
+    </div>
+
+    <div class="login-form">
+        <div class="input-group">
+            <span class="label-text">মোবাইল নাম্বার</span>
+            <input type="text" class="input-field" placeholder="01XXXXXXXXX">
+        </div>
+
+        <div class="pin-container">
+            <span class="pin-icon">🔒</span>
+            <input type="password" class="input-field" placeholder="পিন">
+        </div>
+        <button class="login-btn">লগ ইন</button>
+        
+        <a href="#" class="forgot-pin">পিন নাম্বার ভুলে গিয়েছেন?</a>
+    </div>
+
+    <div class="footer">
+        <div class="footer-item">
+            <span>📍</span><br>স্টোর সন্ধান
+        </div>
+        <div class="footer-item">
+            <span>❓</span><br>সাহায্য
+        </div>
+    </div>
+
+</body>
+</html>
