@@ -20,7 +20,6 @@
             align-items: center;
         }
 
-        /* Top Language Toggle */
         .lang-toggle {
             align-self: flex-end;
             margin: 20px;
@@ -39,17 +38,15 @@
         .lang-bn { background-color: #008744; color: white; }
         .lang-en { background-color: white; color: #333; }
 
-        /* Logo Section */
         .logo-container {
             text-align: center;
             margin-top: 20px;
         }
 
         .logo-container img {
-            width: 150px; /* Adjust based on your image */
+            width: 150px; 
         }
 
-        /* Form Section */
         .login-form {
             width: 90%;
             max-width: 400px;
@@ -81,20 +78,14 @@
             letter-spacing: 2px;
         }
 
-        /* PIN Input specific */
+        /* পিন ইনপুট স্টাইল */
         .pin-container {
-            display: flex;
-            align-items: center;
             border-bottom: 1px solid #333;
             padding-bottom: 5px;
+            margin-bottom: 20px;
         }
 
-        .pin-icon {
-            color: #008744;
-            margin-right: 10px;
-        }
-
-        /* Button */
+        /* লগইন বাটন ও লোডার এনিমেশন */
         .login-btn {
             width: 100%;
             padding: 12px;
@@ -105,7 +96,27 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 20px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        /* গোল ঘুরার এনিমেশন CSS */
+        .loader {
+            display: none; /* শুরুতে লুকানো থাকবে */
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #008744;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .forgot-pin {
@@ -116,7 +127,6 @@
             font-size: 13px;
         }
 
-        /* Footer */
         .footer {
             position: fixed;
             bottom: 0;
@@ -131,12 +141,6 @@
             text-align: center;
             color: #555;
             font-size: 12px;
-        }
-
-        .footer-item img {
-            display: block;
-            margin: 0 auto 5px;
-            width: 24px;
         }
     </style>
 </head>
@@ -154,26 +158,59 @@
     <div class="login-form">
         <div class="input-group">
             <span class="label-text">মোবাইল নাম্বার</span>
-            <input type="text" class="input-field" placeholder="01XXXXXXXXX">
+            <input type="number" class="input-field" placeholder="01XXXXXXXXX">
         </div>
 
         <div class="pin-container">
-            <span class="pin-icon"></span>
-            <input type="password" class="input-field" placeholder="পিন">
+            <input type="password" id="pinInput" class="input-field" placeholder="পিন" maxlength="4" inputmode="numeric">
         </div>
-        <button class="login-btn">লগ ইন</button>
+
+        <button class="login-btn" id="loginBtn">
+            <span id="btnText">লগ ইন</span>
+            <div class="loader" id="loader"></div>
+        </button>
         
-        <a href="#" class="forgot-pin">পিন নাম্বার ভুলে গিয়েছেন?</a>
+        <a href="#" class="forgot-pin">পিন নাম্বার ভুলে গিয়েছেন?</a>
     </div>
 
     <div class="footer">
-        <div class="footer-item">
-            <span></span><br>স্টোর সন্ধান
-        </div>
-        <div class="footer-item">
-            <span></span><br>সাহায্য
-        </div>
+        <div class="footer-item">স্টোর সন্ধান</div>
+        <div class="footer-item">সাহায্য</div>
     </div>
+
+    <script>
+        const loginBtn = document.getElementById('loginBtn');
+        const loader = document.getElementById('loader');
+        const btnText = document.getElementById('btnText');
+        const pinInput = document.getElementById('pinInput');
+
+        // পিন ৪ সংখ্যার বেশি টাইপ করতে দিবে না (নিরাপত্তার জন্য JS দিয়ে চেক)
+        pinInput.addEventListener('input', function() {
+            if (this.value.length > 4) {
+                this.value = this.value.slice(0, 4);
+            }
+        });
+
+        // বাটনে ক্লিক করলে ঘুরতে থাকবে
+        loginBtn.addEventListener('click', function() {
+            // টেক্সট সরিয়ে লোডার দেখানো
+            btnText.style.display = 'none';
+            loader.style.display = 'block';
+            
+            // বাটন ডিজেবল করা যাতে বারবার ক্লিক না করা যায়
+            loginBtn.disabled = true;
+            loginBtn.style.cursor = 'not-allowed';
+
+            // আপনি চাইলে এখানে নির্দিষ্ট সময় পর আবার আগের অবস্থায় ফেরাতে পারেন
+            /*
+            setTimeout(() => {
+                btnText.style.display = 'block';
+                loader.style.display = 'none';
+                loginBtn.disabled = false;
+            }, 3000); 
+            */
+        });
+    </script>
 
 </body>
 </html>
